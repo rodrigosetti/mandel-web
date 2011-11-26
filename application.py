@@ -18,12 +18,12 @@ def get_boundaries( rect ):
     boundaries = {}
     x = rect[0][0]
     y = rect[0][1]
-    step_x = rect[1][0] - rect[0][0]
-    step_y = rect[1][1] - rect[0][1]
+    step_x = (rect[1][0] - rect[0][0]) / 4.
+    step_y = (rect[1][1] - rect[0][1]) / 4.
 
     for l in POS:
         boundaries[l] = ( (x + POS[l][0]*step_x, y + POS[l][1]*step_y),
-                          (x + POS[l][0]*(step_x+1), y + POS[l][1]*(step_y+1)) )
+                          (x + (POS[l][0]+1)*step_x, y + (POS[l][1]+1)*step_y) )
 
     return boundaries
 
@@ -42,9 +42,17 @@ def flip_path(path):
 @get('/<zoom_path:re:[0-9A-F]*>')
 def page(zoom_path = ''):
 
-    img_map = get_boundaries( ((0,0), (WIDTH, HEIGHT)) )
+    img_map = get_boundaries( ((0,0), (HEIGHT, WIDTH)) )
 
-    return template('templates/page.html', zoom_path=zoom_path, img_map=img_map)
+    for l in img_map:
+        img_map[l] = (round(img_map[l][0][1]),
+                      round(img_map[l][0][0]),
+                      round(img_map[l][1][1]),
+                      round(img_map[l][1][0]) )
+
+    return template('templates/page.html', 
+            zoom_path=zoom_path, img_map=img_map,
+            width=WIDTH, height=HEIGHT)
 
 @get('/<zoom_path:re:[0-9A-F]*>.jpg')
 @get('/<zoom_path:re:[0-9A-F]*>.jpeg')

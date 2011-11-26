@@ -4,7 +4,13 @@
     </head>
     <body>
         <div id="fractal">
-            <img src="/{{ zoom_path }}.jpeg" alt="Fractal Image" />
+            <img src="/{{ zoom_path }}.jpeg" width="{{ width }}" height="{{ height }}"  alt="Fractal Image" usemap="#zoommap" />
+            <map name="zoommap">
+                %for l in img_map:
+                <area shape="rect" coords="{{ '%d,%d,%d,%d' % img_map[l] }}"
+                    href="/{{ zoom_path + l }}/" alt="{{ l }}" />
+                %end
+            </map>
         </div>
         % if zoom_path:
             <a href="/{{ zoom_path[:-1] }}" title="Zoom out">Zoom out</a>
