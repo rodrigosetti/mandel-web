@@ -1,8 +1,6 @@
 import pygame
 from bottle import get, template, response
-
-WIDTH = 800
-HEIGHT = 600
+from config import *
 
 @get('/<zoom_path:re:[0-9A-F]*>/')
 @get('/<zoom_path:re:[0-9A-F]*>')

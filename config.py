@@ -1,0 +1,5 @@
+
+WIDTH = 800
+HEIGHT = 600
+MAX_FILES = 128
+
