@@ -1,5 +1,8 @@
 
 WIDTH = 800
 HEIGHT = 600
+
+COMPLEX_RECT_MAIN = ( (-2,0), (1.5,2) )
+
 MAX_FILES = 128
 
