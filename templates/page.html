@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Mandel-Web</title>
+    </head>
+    <body>
+        <div id="fractal">
+            <img src="/{{ zoom_path }}.jpeg" alt="Fractal Image" />
+        </div>
+        % if zoom_path:
+            <a href="/{{ zoom_path[:-1] }}/" title="Zoom out">Zoom out</a>
+                % if len(zoom_path) >= 2:
+                <a href="/" title="Start">Start</a>
+                % end
+        % end
+    </body>
+<html>
+
