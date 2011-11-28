@@ -1,9 +1,8 @@
 from __future__ import division
-import pygame
-import string
 from bottle import get, template, response
-from config import *
 from mandel import get_fractal_data
+import pygame, string
+from config import *
 
 POS = { '0' : (0 , 0 ), '1' : (0 , 1 ), '2': (0, 2 ), '3': (0, 3 ),
         '4' : (1 , 0 ), '5' : (1 , 1 ), '6': (1, 2 ), '7': (1, 3 ),
@@ -23,8 +22,8 @@ def get_boundaries( rect ):
     step_y = (rect[1][1] - rect[0][1]) / 4.
 
     for l in POS:
-        boundaries[l] = ( (x + POS[l][0]*step_x, y + POS[l][1]*step_y),
-                          (x + (POS[l][0]+1)*step_x, y + (POS[l][1]+1)*step_y) )
+        boundaries[l] = ( (x + (POS[l][0]+1)*step_x, y + (POS[l][1]+1)*step_y),
+                          (x + POS[l][0]*step_x, y + POS[l][1]*step_y))
 
     return boundaries
 
@@ -46,10 +45,10 @@ def page(zoom_path = ''):
     img_map = get_boundaries( ((0,0), (HEIGHT, WIDTH)) )
 
     for l in img_map:
-        img_map[l] = (round(img_map[l][0][1]),
-                      round(img_map[l][0][0]),
-                      round(img_map[l][1][1]),
-                      round(img_map[l][1][0]) )
+        img_map[l] = (round(img_map[l][0][0]),
+                      round(img_map[l][0][1]),
+                      round(img_map[l][1][0]),
+                      round(img_map[l][1][1]) )
 
     return template('templates/page.html', 
             zoom_path=zoom_path, img_map=img_map,

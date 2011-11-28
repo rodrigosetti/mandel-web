@@ -2,7 +2,7 @@
 WIDTH = 640
 HEIGHT = 480
 
-COMPLEX_RECT_MAIN = ( (-1.6, -2), (1.6,1.5) )
+COMPLEX_RECT_MAIN = ( (-2, -1.6), (1.5,1.6) )
 
 MAX_FILES = 128
 
