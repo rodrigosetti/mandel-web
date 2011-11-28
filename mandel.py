@@ -1,3 +1,4 @@
+from __future__ import division
 import pygame
 from colorsys import hsv_to_rgb
 from math import *
@@ -7,19 +8,20 @@ def get_fractal_data( complex_rect, size, iters=100 ):
 
     for x in xrange(size[0]):
         for y in xrange(size[1]):
-            c = complex( complex_rect[0][0] + (x * (complex_rect[1][0] - complex_rect[0][0]) / float(size[0])),
-                         complex_rect[0][1] + (y * (complex_rect[1][1] - complex_rect[0][1]) / float(size[1])) )
+            c = complex( complex_rect[0][1] + (x * (complex_rect[1][1] - complex_rect[0][1]) / size[0]),
+                         complex_rect[0][0] + (y * (complex_rect[1][0] - complex_rect[0][0]) / size[1]) )
 
             z = c
             for n in xrange(iters):
                 z = z**2 + c
                 if abs(z) >= 2:
                     break
-                if is_in_main_body( c ):
+                elif is_in_main_body( c ):
                     n = iters-1
+                    break
 
             fractal.set_at( (x,y), 
-                    pygame.Color(*( int(k*255) for k in hsv_to_rgb( color(z,n,iters), 1, 1)) ) if n < iters-1 else
+                    pygame.Color(*( int(k*255) for k in hsv_to_rgb( color(z,n,iters), .5, 1)) ) if n < iters-1 else
                     pygame.Color( 0, 0, 0 ) )
 
     filename = '/tmp/fractal.jpeg'

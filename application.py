@@ -1,3 +1,4 @@
+from __future__ import division
 import pygame
 import string
 from bottle import get, template, response
@@ -59,8 +60,9 @@ def page(zoom_path = ''):
 def image(zoom_path = ''):
 
     response.content_type = 'image/jpeg'
+    response.set_header('Cache-Control', 'public')
 
     complex_rect = get_boundaries_recursive( COMPLEX_RECT_MAIN, zoom_path )
 
-    return get_fractal_data( complex_rect, (WIDTH, HEIGHT) )
+    return get_fractal_data( complex_rect, (WIDTH, HEIGHT), ITERS )
 
