@@ -8,3 +8,14 @@ representing, the various zooming steps one can take.
 
 The zoom interface is created by links in a image map over the fractal's image.
 
+## How it works
+
+It uses the fantastic python bottle, the micro-framework, pygame, and the
+Mandelbrot Set fractal's formulas.
+
+## TODO
+
+* Implement server cache
+* Improve coloring
+
+
