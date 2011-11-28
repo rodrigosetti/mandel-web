@@ -62,5 +62,5 @@ def image(zoom_path = ''):
 
     complex_rect = get_boundaries_recursive( COMPLEX_RECT_MAIN, zoom_path )
 
-    return get_fractal_data( complex_rect )
+    return get_fractal_data( complex_rect, (WIDTH, HEIGHT) )
 
