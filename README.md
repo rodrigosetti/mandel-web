@@ -16,5 +16,6 @@ Mandelbrot Set fractal's formulas.
 ### TODO
 
 * Implement memory cache (memcached)
+* Implement image flipping to make use of fractal's simetry
 * Improve coloring
 
