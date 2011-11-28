@@ -15,7 +15,6 @@ Mandelbrot Set fractal's formulas.
 
 ### TODO
 
-* Fix zooming bug
 * Implement memory cache (memcached)
 * Improve coloring
 
