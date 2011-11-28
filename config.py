@@ -4,6 +4,7 @@ HEIGHT = 480
 
 COMPLEX_RECT_MAIN = ( (-2, -1.6), (1.5,1.6) )
 
+IMAGES_DIR = '/tmp/images/'
 MAX_FILES = 128
 
 ITERS=100

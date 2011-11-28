@@ -3,7 +3,7 @@ import pygame
 from colorsys import hsv_to_rgb
 from math import *
 
-def get_fractal_data( complex_rect, size, iters=100 ):
+def save_fractal( complex_rect, size, iters, filename ):
     fractal = pygame.Surface( size )
 
     for x in xrange(size[0]):
@@ -24,10 +24,7 @@ def get_fractal_data( complex_rect, size, iters=100 ):
                     pygame.Color(*( int(k*255) for k in hsv_to_rgb( color(z,n,iters), .5, 1)) ) if n < iters-1 else
                     pygame.Color( 0, 0, 0 ) )
 
-    filename = '/tmp/fractal.jpeg'
     pygame.image.save( fractal, filename )
-    data = open( filename )
-    return data.read()
 
 def is_in_main_body( c ):
     q = (c.real - .25)**2 + c.imag**2

@@ -1,7 +1,7 @@
 from __future__ import division
 from bottle import get, template, response
-from mandel import get_fractal_data
-import pygame, string
+from mandel import save_fractal
+import pygame, string, os
 from config import *
 
 POS = { '0' : (0 , 0 ), '1' : (0 , 1 ), '2': (0, 2 ), '3': (0, 3 ),
@@ -22,8 +22,8 @@ def get_boundaries( rect ):
     step_y = (rect[1][1] - rect[0][1]) / 4.
 
     for l in POS:
-        boundaries[l] = ( (x + (POS[l][0]+1)*step_x, y + (POS[l][1]+1)*step_y),
-                          (x + POS[l][0]*step_x, y + POS[l][1]*step_y))
+        boundaries[l] = ( (y + POS[l][1]*step_y, x + POS[l][0]*step_x),
+                          (y + (POS[l][1]+1)*step_y, x + (POS[l][0]+1)*step_x))
 
     return boundaries
 
@@ -63,5 +63,16 @@ def image(zoom_path = ''):
 
     complex_rect = get_boundaries_recursive( COMPLEX_RECT_MAIN, zoom_path )
 
-    return get_fractal_data( complex_rect, (WIDTH, HEIGHT), ITERS )
+    filename = IMAGES_DIR + zoom_path + '.jpeg';
+
+    files = os.listdir( IMAGES_DIR )
+
+    if (zoom_path + '.jpeg') not in files:
+        save_fractal( complex_rect, (WIDTH, HEIGHT), ITERS, filename )
+
+        if len( files ) > MAX_FILES:
+            os.remove( IMAGES_DIR + max( files, key=len ) )
+
+    data = open( filename )
+    return data.read()
 
