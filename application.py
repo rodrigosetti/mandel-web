@@ -54,8 +54,13 @@ def page(zoom_path = ''):
             zoom_path=zoom_path, img_map=img_map,
             width=WIDTH, height=HEIGHT)
 
-@get('/<zoom_path:re:[0-9A-F]*>.jpg')
-@get('/<zoom_path:re:[0-9A-F]*>.jpeg')
+@get('/root.jpg')
+@get('/root.jpeg')
+def root_image():
+    return image()
+
+@get('/<zoom_path:re:[0-9A-F]+>.jpg')
+@get('/<zoom_path:re:[0-9A-F]+>.jpeg')
 def image(zoom_path = ''):
 
     response.content_type = 'image/jpeg'

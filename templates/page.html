@@ -4,7 +4,7 @@
     </head>
     <body>
         <div id="fractal">
-            <img src="/{{ zoom_path }}.jpeg" width="{{ width }}" height="{{ height }}"  alt="Fractal Image" usemap="#zoommap" />
+            <img src="/{{ zoom_path if zoom_path else "root" }}.jpeg" width="{{ width }}" height="{{ height }}"  alt="Fractal Image" usemap="#zoommap" />
             <map name="zoommap">
                 %for l in img_map:
                 <area shape="rect" coords="{{ '%d,%d,%d,%d' % img_map[l] }}"
