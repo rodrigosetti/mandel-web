@@ -20,9 +20,13 @@ def save_fractal( complex_rect, size, iters, filename ):
                     n = iters-1
                     break
 
-            fractal.set_at( (x,y),
-                    pygame.Color(*( int(k*255) for k in hsv_to_rgb( color(z,n,iters), .5, 1)) ) if n < iters-1 else
-                    pygame.Color( 0, 0, 0 ) )
+            if n < iters-1:
+                smooth = color(z,n,iters)
+                fractal.set_at( (x,y), 
+                    pygame.Color(*( int(k*255) for k in hsv_to_rgb( 
+                        smooth/100, (sin(smooth/5) + 1)/2, 1)) ) )
+            else:
+                fractal.set_at( (x,y), pygame.Color( 0, 0, 0 ))
 
     pygame.image.save( fractal, filename )
 
