@@ -15,6 +15,9 @@ Mandelbrot Set fractal's formulas.
 
 ### TODO
 
+* Use smarter client caching
 * Implement memory cache (memcached)
 * Implement image flipping to make use of fractal's simetry
+* Use analytics
+* Show a border in zooming rectangles
 
