@@ -4,12 +4,13 @@ from mandel import save_fractal
 import pygame, string, os
 from config import *
 
-POS = { '0' : (0 , 0 ), '1' : (0 , 1 ), '2': (0, 2 ), '3': (0, 3 ),
-        '4' : (1 , 0 ), '5' : (1 , 1 ), '6': (1, 2 ), '7': (1, 3 ),
-        '8' : (2 , 0 ), '9' : (2 , 1 ), 'A': (2, 2 ), 'B': (2, 3 ),
-        'C' : (3 , 0 ), 'D' : (3 , 1 ), 'E': (3, 2 ), 'F': (3, 3 ) }
+POS = { '0' : (0 , 0 ), '1' : (1 , 0 ), '2': (2, 0 ), '3': (3, 0 ),
+        '4' : (0 , 1 ), '5' : (1 , 1 ), '6': (2, 1 ), '7': (3, 1 ),
+        '8' : (0 , 2 ), '9' : (1 , 2 ), 'A': (2, 2 ), 'B': (3, 2 ),
+        'C' : (0 , 3 ), 'D' : (1 , 3 ), 'E': (2, 3 ), 'F': (3, 3 ) }
 
 FLIP_TABLE = string.maketrans('0123456789ABCEDF', 'CDEF89AB45670123')
+ROTATE_TABLE = string.maketrans('0123456789ABCEDF', '048C159D26AE37BF')
 
 def get_boundaries( rect ):
     "return the boundaries of a given space"
@@ -22,8 +23,8 @@ def get_boundaries( rect ):
     step_y = (rect[1][1] - rect[0][1]) / 4.
 
     for l in POS:
-        boundaries[l] = ( (y + POS[l][1]*step_y, x + POS[l][0]*step_x),
-                          (y + (POS[l][1]+1)*step_y, x + (POS[l][0]+1)*step_x))
+        boundaries[l] = ( (x + POS[l][0]*step_x, y + POS[l][1]*step_y),
+                          (x + (POS[l][0]+1)*step_x, y + (POS[l][1]+1)*step_y))
 
     return boundaries
 
@@ -42,13 +43,15 @@ def flip_path(path):
 @get('/<zoom_path:re:[0-9A-F]*>')
 def page(zoom_path = ''):
 
-    img_map = get_boundaries( ((0,0), (HEIGHT, WIDTH)) )
+    boundaries = get_boundaries( ((0,0), (HEIGHT, WIDTH)) )
 
-    for l in img_map:
-        img_map[l] = (round(img_map[l][0][0]),
-                      round(img_map[l][0][1]),
-                      round(img_map[l][1][0]),
-                      round(img_map[l][1][1]) )
+    img_map = {}
+    for l in boundaries:
+        nl = string.translate( l , ROTATE_TABLE )
+        img_map[nl] = (round(boundaries[l][0][1]),
+                      round(boundaries[l][0][0]),
+                      round(boundaries[l][1][1]),
+                      round(boundaries[l][1][0]) )
 
     return template('templates/page.html', 
             zoom_path=zoom_path, img_map=img_map,
