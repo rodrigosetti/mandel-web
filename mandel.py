@@ -1,10 +1,14 @@
 from __future__ import division
-import pygame
+from PIL import Image, ImageDraw
 from colorsys import hsv_to_rgb
 from math import *
 
 def save_fractal( complex_rect, size, iters, filename ):
-    fractal = pygame.Surface( size )
+    image = Image.new( 'RGB', size )
+    fractal = ImageDraw.Draw(image)
+
+    has_outter = False
+    has_inner = False
 
     for x in xrange(size[0]):
         for y in xrange(size[1]):
@@ -21,19 +25,26 @@ def save_fractal( complex_rect, size, iters, filename ):
                     break
 
             if n < iters-1:
+                has_outter = True
                 smooth = color(z,n,iters)
-                fractal.set_at( (x,y), 
-                    pygame.Color(*( int(k*255) for k in hsv_to_rgb( 
-                        smooth/100, (sin(smooth/5) + 1)/2, 1)) ) )
+                fractal.point( (x,y), 
+                    tuple( int(k*255) for k in hsv_to_rgb( 
+                        smooth/100, (sin(smooth/5) + 1)/2, 1)) )
             else:
-                fractal.set_at( (x,y), pygame.Color( 0, 0, 0 ))
+                has_inner = True
+                fractal.point( (x,y), ( 0, 0, 0 ))
 
-    pygame.image.save( fractal, filename )
+    del fractal
+    image.save( filename, "JPEG" )
+
+    return has_outter and has_inner
 
 def is_in_main_body( c ):
+    "Mandelbrot optimization: returns True if c is within main cardioid or period-1 bulb"
     q = (c.real - .25)**2 + c.imag**2
     return (q * (q + (c.real - .25)) < .25 * c.imag ** 2) or ( (c.real + 1)**2 + c.imag**2 < .0625 )
 
 def color( z, n, iters=100 ):
+    "Uses smoth coloring algorithm to get a smooth scale"
     return n - log( log ( abs(z) ) / log ( iters ) , 2)
 

@@ -10,12 +10,11 @@ The zoom interface is created by links in a image map over the fractal's image.
 
 ### How it works
 
-It uses the fantastic python bottle, the micro-framework, pygame (although I
-want to migrate to PIL), and the Mandelbrot Set fractal's formulas.
+It uses the fantastic python bottle, the micro-framework, PIL (python imaging),
+and the Mandelbrot Set fractal's formulas.
 
 ### TODO
 
-* use PIL (python imaging library) instead of pygame
 * Use smarter client caching
 * Implement memory cache (memcached)
 * Implement image flipping to make use of fractal's simetry

@@ -1,7 +1,7 @@
 from __future__ import division
 from bottle import get, template, response
 from mandel import save_fractal
-import pygame, string, os
+import string, os
 from config import *
 
 POS = { '0' : (0 , 0 ), '1' : (1 , 0 ), '2': (2, 0 ), '3': (3, 0 ),
